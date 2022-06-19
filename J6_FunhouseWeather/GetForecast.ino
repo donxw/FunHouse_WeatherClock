@@ -61,7 +61,8 @@ weather getForecast( weather w, int httpPort, String APIKEY)
   }
 
 
-  //Parse and assign to global variables
+  //Parse and assign to global variables - see https://arduinojson.org/ 
+  //Code below was created by arduinojson assistant - https://arduinojson.org/v6/assistant then modified
 
   const size_t capacity = 9 * JSON_ARRAY_SIZE(1) + JSON_ARRAY_SIZE(8) + 17 * JSON_OBJECT_SIZE(4) + 9 * JSON_OBJECT_SIZE(6) + 8 * JSON_OBJECT_SIZE(14) + JSON_OBJECT_SIZE(15) + 520;
   DynamicJsonDocument doc(capacity);
