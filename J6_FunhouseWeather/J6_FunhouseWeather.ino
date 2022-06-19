@@ -229,7 +229,7 @@ void loop() {
     previousWeatherTime = currentTime;  //reset timer
 
     location = getForecast( location, httpPort, APIKEY );
-    Symbol = getSymbol(location.curr_id);  // requied to serial print the weather forecast
+    Symbol = getSymbol(location.curr_id);  // required to serial print the weather forecast
     SerialPrintForecast();
 
     tft.fillScreen(ST77XX_WHITE);                              // clear screen every 15 min
