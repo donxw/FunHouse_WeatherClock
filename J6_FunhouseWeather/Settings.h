@@ -21,8 +21,8 @@ struct weather {
   char curr_weat[60];
 };
 
-//String APIKEY = "122c8b5cd4731038ff78486f1faa70c5";
-String APIKEY = "d268dda12c36bdc8809a9525f37ab560";  //407keith@gmail
+//Get your key at https://home.openweathermap.org/users/sign_up
+String APIKEY = "xxxxxx";  //enter your API Key
 
 // weather variables
 #define SUN  0
