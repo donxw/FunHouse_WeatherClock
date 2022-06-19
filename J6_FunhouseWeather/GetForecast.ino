@@ -21,7 +21,7 @@ weather getForecast( weather w, int httpPort, String APIKEY)
 
   String url = "/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly&units=" + units + "&appid=" + APIKEY;
 
-  //https://api.openweathermap.org/data/2.5/onecall?lat=51.5074&lon=0.1278&exclude=minutely,hourly&units=imperial&appid=122c8b5cd4731038ff78486f1faa70c5
+  //https://api.openweathermap.org/data/2.5/onecall?lat=51.5074&lon=0.1278&exclude=minutely,hourly&units=imperial&appid=xxxxxxxxxxxxxxxxxxxxxxxx
 
   // Send HTTP request
   Serial.println("Requesting URL: " + url);
