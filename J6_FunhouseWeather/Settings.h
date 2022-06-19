@@ -46,8 +46,8 @@ int8_t pTrend;
 #define NTP_SERVERS "us.pool.ntp.org", "pool.ntp.org", "time.nist.gov"
 
 // Change to suit your WiFi router
-#define WIFI_SSID     "gwifi"
-#define WIFI_PASSWORD "c4d496c2"
+#define WIFI_SSID     "xxxx"
+#define WIFI_PASSWORD "xxxx"
 
 // Variables for the milli loops
 unsigned long previousWeatherTime = 0;
