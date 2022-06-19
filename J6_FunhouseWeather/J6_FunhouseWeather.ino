@@ -67,9 +67,6 @@ weather location;  //for weather by location
 
 // Button setup
 #include <Button2.h>
-//#define BUTTON_0        0
-//#define BUTTON_1        35
-//#define LONGCLICK_MS    100
 Button2 btn0 = Button2(BUTTON_UP);  //change location
 Button2 btn1 = Button2(BUTTON_SELECT);  //change units
 Button2 btn2 = Button2(BUTTON_DOWN);  //refresh screen
@@ -77,10 +74,11 @@ int caseselector = 0;
 bool buttonpressed = false;
 bool refreshScreen = true;
 
+//Create display instances
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RESET); // Use for funhouse
 U8G2_FOR_ADAFRUIT_GFX u8display;  //must match what is used in the functions
 
-//Declare Functions in Functions Tab and GetForecast Tab
+//Functions in Functions and GetForecast Tab
 void writeString(char add, String data);
 String read_String(char add);
 String strTime(time_t unixTime);
@@ -119,14 +117,13 @@ void setup() {
   u8display.setForegroundColor(ST77XX_BLACK);      // apply Adafruit GFX color
   u8display.setBackgroundColor(ST77XX_BLUE);
 
-
   // Initialize wifi
   WiFi.mode(WIFI_STA);
   Serial.printf("\n\nConnecting to %s\n", WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   //WiFiManager wifiManager;
-  //wifiManager.autoConnect("AutoConnectAP");
+  //wifiManager.autoConnect("FunhouseConnectAP");
 
   Serial.println(F("Connecting..."));
   u8display.setForegroundColor(ST77XX_BLACK);      // apply Adafruit GFX color
@@ -144,8 +141,8 @@ void setup() {
 
   // connect to NTP servers
   configTime(0, 0, NTP_SERVERS);  // must be executed after wifi
-  //setenv("TZ", "GMT0BST,M3.5.0/1,M10.5.0", 1);  // set to London - match with the location, lon, lat set before setup()
-  setenv("TZ", "PST8PDT,M3.2.0/2,M11.1.0", 1);  // set to Palo Alto - match to case select 0
+  //setenv("TZ", "GMT0BST,M3.5.0/1,M10.5.0", 1);  // set to GMT - match with the location, lon, lat set before setup()
+  setenv("TZ", "PST8PDT,M3.2.0/2,M11.1.0", 1);  // set to Pacific Time - match to case select 0
 
   // start EEPROM
   EEPROM.begin(512);
@@ -191,7 +188,6 @@ void setup() {
     while (1) delay(10);
   }
   Serial.println("AHT10 or AHT20 found");
-
 
   // Config SHT4x Temp / Humidity Sensor
   if (! sht4.begin()) {
@@ -317,8 +313,7 @@ void loop() {
   //  ********************************************************
   if (currentTime - previousClockTime > clockInterval || refreshScreen == true)
   {
-    // cannot clear screen every second so use method of storing old info to erase before drawing new info
-
+    // cannot clear screen every second so erase prev before drawing new info
     previousClockTime = currentTime;  //reset timer
     t = time(nullptr);
     tm *timeinfo = localtime (&t);  //Update time from local RTC
@@ -346,7 +341,7 @@ void loop() {
       if (units == "imperial") {
         u8display.setForegroundColor(ST77XX_WHITE);
         sprintf(buf, "%02d", hh12_p);
-        u8display.drawStr( xpos, ypos, buf);         //erase previous hours
+        u8display.drawStr( xpos, ypos, buf);     //erase previous hours
         u8display.setForegroundColor(0x1F);      // Set colour to blue
         sprintf(buf, "%02d", hh12);
         hh12_p = hh12;
@@ -354,7 +349,7 @@ void loop() {
       } else {
         u8display.setForegroundColor(ST77XX_WHITE);
         sprintf(buf, "%02d", hh_p);
-        u8display.drawStr( xpos, ypos, buf);         //erase previous hours
+        u8display.drawStr( xpos, ypos, buf);     //erase previous hours
         u8display.setForegroundColor(0x1F);      // Set colour to blue
         sprintf(buf, "%02d", hh);
         hh_p = hh;
@@ -362,22 +357,22 @@ void loop() {
       }
 
       // Colon***********************************************
-      xcolon = xpos;                                                         // Save colon coord for later to flash on/off later
+      xcolon = xpos;                                         // Save colon coord for later to flash on/off later
       u8display.setForegroundColor(ST77XX_WHITE);
       xpos += u8display.drawStr( xpos, ypos, ":");           // Draw placeholder, flash later
 
       // Minutes*******************************************
       sprintf(buf, "%02d", mm_p);
-      u8display.drawStr( xpos, ypos, buf);              // Erase previous
+      u8display.drawStr( xpos, ypos, buf);          // Erase previous
       u8display.setForegroundColor(0x1F);           // Set colour to blue
       sprintf(buf, "%02d", mm);
       mm_p = mm;
-      xpos += u8display.drawStr(xpos, ypos, buf);  // Draw minutes
-      xsecs = xpos;                                                 // Save seconds 'x' position for later display updates
+      xpos += u8display.drawStr(xpos, ypos, buf);   // Draw minutes
+      xsecs = xpos;                                 // Save seconds 'x' position for later display updates
 
       // am - pm***************************************
       if (units == "imperial") {
-        u8display.setFont( u8g2_font_helvB12_tf  );                    // Select the font
+        u8display.setFont( u8g2_font_helvB12_tf  ); // Select the font
         u8display.drawStr( xpos + 2, ypos + 0, hh >= 12 ? "pm" : "am");
       }
       //Serial.printf("%d:%d\n", hh12, mm);
@@ -391,27 +386,27 @@ void loop() {
       oss = ss;
       // Flash the colons on/off
       xpos = xsecs;
-      u8display.setFont(  u8g2_font_crox5h_tr );                     // Select the font
+      u8display.setFont(  u8g2_font_crox5h_tr );            // Select the font
       if (ss % 2)
       {
         u8display.setForegroundColor(ST77XX_WHITE);         // Set colour to white
-        u8display.drawStr( xcolon, ypos, ":");                            // Erase hour:minute colon
-        u8display.setForegroundColor(0x1F);                          // Set colour back to blue
+        u8display.drawStr( xcolon, ypos, ":");              // Erase hour:minute colon
+        u8display.setForegroundColor(0x1F);                 // Set colour back to blue
       }
       else
       {
-        u8display.setForegroundColor(0x1F); // Set colour back to blue
+        u8display.setForegroundColor(0x1F);      // Set colour back to blue
         u8display.drawStr( xcolon, ypos, ":");   // Hour:minute colon
       }
       //Draw seconds
-      u8display.setFont( u8g2_font_helvB12_tf );                        // Select the font
+      u8display.setFont( u8g2_font_helvB12_tf );                // Select the font
       u8display.setForegroundColor(ST77XX_WHITE);               // erase prev ss
       sprintf(buf, "%02d", ss_p);
-      u8display.drawStr( xpos + 2, ysecs - 12, buf);                     // erase old seconds
-      u8display.setForegroundColor(0x1F);                                 // Set colour to blue
+      u8display.drawStr( xpos + 2, ysecs - 12, buf);            // erase old seconds
+      u8display.setForegroundColor(0x1F);                       // Set colour to blue
       sprintf(buf, "%02d", ss);
       ss_p = ss;
-      u8display.drawStr( xpos + 2, ysecs - 12, buf);                     // Draw new seconds
+      u8display.drawStr( xpos + 2, ysecs - 12, buf);            // Draw new seconds
     }
 
     //  ********************************************************
@@ -504,7 +499,7 @@ void loop() {
       Serial.println("Pressure Trend: " + str_pressTrend);
 
       uint16_t xpos = 2;  uint16_t ypos = y_loc + 70;
-      u8display.setFont( u8g2_font_helvB14_tf );                       // Select the font
+      u8display.setFont( u8g2_font_helvB14_tf );                // Select the font
       u8display.setForegroundColor(ST77XX_BLACK);               // Set to bacckground
       // Draw divider line
       tft.drawFastHLine(xpos, ypos - 6, 80, ST77XX_BLACK);
@@ -514,20 +509,20 @@ void loop() {
       xpos = 2;
       ypos += 20;
       if (units == "imperial") {
-        u8display.setForegroundColor(ST77XX_WHITE);               // Set to bacckground
+        u8display.setForegroundColor(ST77XX_WHITE);            // Set to bacckground
         sprintf(buf, "Barometer: %0.2f inHg", press_p);
-        u8display.drawStr( xpos, ypos, buf);                                    // erase old
+        u8display.drawStr( xpos, ypos, buf);                   // erase old
         u8display.setForegroundColor(ST77XX_MAGENTA);          // Set colour to magenta
         sprintf(buf, "Barometer: %0.2f inHg", pressure.pressure * 0.02953);
-        u8display.drawStr( xpos, ypos, buf);                                     // Draw new
+        u8display.drawStr( xpos, ypos, buf);                   // Draw new
         press_p = 0.02953 * pressure.pressure;
       } else {
-        u8display.setForegroundColor(ST77XX_WHITE);               // Set to bacckground
+        u8display.setForegroundColor(ST77XX_WHITE);            // Set to bacckground
         sprintf(buf, "Barometer: %0.2f hPA", press_p );
-        u8display.drawStr( xpos, ypos, buf);                                    // erase old
+        u8display.drawStr( xpos, ypos, buf);                   // erase old
         u8display.setForegroundColor(ST77XX_MAGENTA);          // Set colour to magenta
         sprintf(buf, "Barometer: %0.2f hPA", pressure.pressure);
-        u8display.drawStr( xpos, ypos, buf);                                     // Draw new
+        u8display.drawStr( xpos, ypos, buf);                   // Draw new
         press_p = pressure.pressure;
       }
 
@@ -535,11 +530,11 @@ void loop() {
       // Draw forcast from pressure trend
       ypos = ypos + 20;
       xpos = 2;
-      u8display.setFont( u8g2_font_helvB12_tf );                        // Select the font
+      u8display.setFont( u8g2_font_helvB12_tf );                // Select the font
       u8display.setForegroundColor(ST77XX_WHITE);               // Set to bacckground
-      u8display.drawStr( xpos, ypos, str_prev_pressTrend.c_str());       // Erase old
-      u8display.setForegroundColor(ST77XX_MAGENTA);         // Set colour to magenta
-      u8display.drawStr( xpos, ypos, str_pressTrend.c_str());     // Draw new
+      u8display.drawStr( xpos, ypos, str_prev_pressTrend.c_str());  // Erase old
+      u8display.setForegroundColor(ST77XX_MAGENTA);             // Set colour to magenta
+      u8display.drawStr( xpos, ypos, str_pressTrend.c_str());   // Draw new
       str_prev_pressTrend = str_pressTrend;
 
     }
@@ -549,7 +544,7 @@ void loop() {
     sht4.getEvent(&sht_humid, &sht_temp);// populate temp and humidity objects with fresh data
     Serial.printf("Sensors: %0.1f *C  %0.1f %%  %0.2f hPa\n", sht_temp.temperature, sht_humid.relative_humidity, pressure.pressure);
 
-    //    u8display.setFont( u8g2_font_helvB14_tf );                       // Select the font
+    //    u8display.setFont( u8g2_font_helvB14_tf );              // Select the font
     //    uint16_t ypos = y_loc + 120;
     //    uint16_t xpos = 6;
     //    u8display.setForegroundColor(ST77XX_BLACK);             // Set colour to black
@@ -560,43 +555,43 @@ void loop() {
     u8display.setCursor(xpos, ypos);
 
     if (location.units == "imperial") {
-      u8display.setForegroundColor(ST77XX_WHITE);              // Set to bacckground
-      u8display.printf("%0.1f°F | ", temp_p);                               // erase old  // had to use printf because drawStr mangles the degree symbol
+      u8display.setForegroundColor(ST77XX_WHITE);                  // Set to bacckground
+      u8display.printf("%0.1f°F | ", temp_p);                      // erase old  // had to use printf because drawStr mangles the degree symbol
       u8display.setCursor(xpos, ypos);
-      u8display.setForegroundColor(ST77XX_BLUE);             // Set colour to blue
+      u8display.setForegroundColor(ST77XX_BLUE);                          // Set colour to blue
       u8display.printf("%0.1f°F | ", 1.8 * sht_temp.temperature + 32);    // Draw new
       temp_p = 1.8 * sht_temp.temperature + 32;
     } else
     {
-      u8display.setForegroundColor(ST77XX_WHITE);              // Set to bacckground
-      u8display.printf("%0.1f°C | ", temp_p);                               // erase old  // had to use printf because drawStr mangles the degree symbol
+      u8display.setForegroundColor(ST77XX_WHITE);                  // Set to bacckground
+      u8display.printf("%0.1f°C | ", temp_p);                      // erase old  // had to use printf because drawStr mangles the degree symbol
       u8display.setCursor(xpos, ypos);
-      u8display.setForegroundColor(ST77XX_BLUE);             // Set colour to blue
+      u8display.setForegroundColor(ST77XX_BLUE);                   // Set colour to blue
       u8display.printf("%0.1f°C | ", sht_temp.temperature);        // Draw new
       temp_p = sht_temp.temperature;
     }
 
     //    u8display.setForegroundColor(ST77XX_WHITE);              // Set to bacckground
-    //    u8display.printf("%0.1f°C | ", temp_p);                               // erase old  // had to use printf because drawStr mangles the degree symbol
+    //    u8display.printf("%0.1f°C | ", temp_p);                  // erase old  // had to use printf because drawStr mangles the degree symbol
     //    u8display.setCursor(xpos, ypos);
-    //    u8display.setForegroundColor(ST77XX_BLUE);             // Set colour to blue
-    //    u8display.printf("%0.1f°C | ", sht_temp.temperature);        // Draw new
+    //    u8display.setForegroundColor(ST77XX_BLUE);               // Set colour to blue
+    //    u8display.printf("%0.1f°C | ", sht_temp.temperature);    // Draw new
     //    temp_p = sht_temp.temperature;
 
     xpos += 120;
-    u8display.setForegroundColor(ST77XX_WHITE);               // Set to bacckground
+    u8display.setForegroundColor(ST77XX_WHITE);                    // Set to bacckground
     sprintf(buf, "%0.1f%%  ", humid_p);
-    u8display.drawStr( xpos, ypos, buf);                                    // erase old
-    u8display.setForegroundColor(ST77XX_BLUE);               // Set colour to blue
+    u8display.drawStr( xpos, ypos, buf);                           // erase old
+    u8display.setForegroundColor(ST77XX_BLUE);                     // Set colour to blue
     sprintf(buf, "%0.1f%%  ", sht_humid.relative_humidity);
-    u8display.drawStr( xpos, ypos, buf);                                    // Draw new
+    u8display.drawStr( xpos, ypos, buf);                           // Draw new
     humid_p = sht_humid.relative_humidity;
 
   }
 
   if (refreshScreen == true) {
     //fhtone(SPEAKER, 988.0, 100.0);   // tone1 - B5
-    //fhtone(SPEAKER, 1319.0, 200.0); // tone2 - E6
+    //fhtone(SPEAKER, 1319.0, 200.0);  // tone2 - E6
     // rainbow dotstars
     rainbow(1);
     strip.clear();
