@@ -23,5 +23,19 @@ Built in buttons are used to
    -  3D Printer Slicer file - FaceCover v11.3mf 
   
 ## Code
+The loop() function is structured in four tasks:
+1)  Get weather forecast and update the weather display every 15 min
+2)  Get time and update the time display every sec
+3)  Read the SHT40 Temp / Humid sensors and update the display every 30 sec
+4)  Read and update the barometric pressure every 20 min
 
+### Weather  
+The weather task takes up the most lines of code, but is actually fairly simple.  The task first calls the getForecast function which does these three things:
+*  Send a properly formatted get string to api.openweathermap.org
+*  Parse the JSON response - the parsing code was created using the ArduinoJSON assistant (ref:  https://youtu.be/NYP_CxdYzLo and arduinojson.org )
+*  Copy the variable to be displayed into the a global struct variable weather
+
+On return from the getForecast function, the task displays the weather data row by row.  The getSymbol function maps the weather id returned from the API call into one of the weather types (SUN, CLOUDS, etc).  The drawWeatherSymbol function then maps this to an associated glyph and displays it to the screen.
+
+### Time  
 
