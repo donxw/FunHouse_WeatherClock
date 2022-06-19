@@ -4,7 +4,8 @@
 
    Barometer reference:  https://www.wikihow.com/Set-a-Barometer#:~:text=Predicting%20weather%20using%20a%20barometer%20is%20all%20about,release%20any%20pressure%20changes%20stored%20in%20the%20mechanisms.
    NTP TZ reference:  https://randomnerdtutorials.com/esp32-ntp-timezones-daylight-saving/
-
+   List of timezones:  https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+   
 */
 
 #include <Adafruit_GFX.h>    // Core graphics library
