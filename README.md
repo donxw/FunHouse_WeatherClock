@@ -17,4 +17,10 @@ Built in buttons are used to
 ## Parts Used
 Adafruit Funhouse Devboard:  https://www.adafruit.com/search?q=funhouse
 Adafruit SHT40 Temp / Humidity Sensor:  https://www.adafruit.com/search?q=sht040
+3D printed faceplate
+  Fusion 360 - FaceCover v11.f3d file
+  3D Printer Slicer file - FaceCover v11.3mf 
+  
+## Code
+
 
