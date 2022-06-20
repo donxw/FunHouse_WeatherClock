@@ -17,6 +17,7 @@ Built in buttons are used to
 
 ## Parts Used
 *  Adafruit Funhouse Devboard:  https://www.adafruit.com/search?q=funhouse
+*  To learn how to set up the board in Arduino:  https://learn.adafruit.com/adafruit-funhouse
 *  Adafruit SHT40 Temp / Humidity Sensor:  https://www.adafruit.com/search?q=sht040
 *  3D printed faceplate \n
    -  Fusion 360 - FaceCover v11.f3d file
@@ -52,5 +53,33 @@ https://www.tutorialspoint.com/c_standard_library/time_h.htm
 https://github.com/SensorsIot/NTP-time-for-ESP8266-and-ESP32
 
 ### 3)  Sensor Temp / Humid  
+The built in AHT20 sensor consistently reads high - possibly because it picks up heat from the Funhouse PCB.  Therefore, a separate temp / humidity sensor is attached off the board.  The SHT40 was used since its I2C address does not conflict with the onboard AHT20 sensor.
+
+Here is all you need to know to use the sensor.
+https://learn.adafruit.com/adafruit-sht40-temperature-humidity-sensor
+
+### 4)  Sensor Barometric Pressue  
+The Funhouse has a built in DPS310.  After installing the library, the example files provide all that is needed to use the sensor.  
+
+To interpret the readings, please see this reference:
+https://www.wikihow.com/Set-a-Barometer#:~:text=Predicting%20weather%20using%20a%20barometer%20is%20all%20about,release%20any%20pressure%20changes%20stored%20in%20the%20mechanisms
+
+These rules are coded in:
+    /*
+      Falling
+      If the reading is over 30.2 inches of mercury and falling rapidly, this indicates cloudy, but warmer weather.
+      If the reading is between 29.8 and 30.2 inches of mercury and falling rapidly, rain is most likely on the way.
+      If it's under 29.8 inches of mercury and falling slowly, rain is likely; if it's falling rapidly, a storm is imminent.
+
+      Rising
+      Readings over 30.2 inches of mercury that rise indicate that the weather will continue to be fair.
+      Readings between 29.8 and 30.2 inches of mercury that rise indicate that the weather will remain whatever it presently is.
+      Readings under 29.8 inches of mercury that rise indicate that the weather is clearing, but will be cooler.
+
+      Steady
+      A strong high pressure system is around 30.4 inches of mercury. Anything above 30 is considered high pressure.  Expect more warm weather.
+      A typical low pressure system is around 29.5 inches of mercury. Anything below 29.9 is considered low pressure.  Expect cooler weather.
+    */
+
 
 
