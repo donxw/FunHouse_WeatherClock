@@ -29,13 +29,28 @@ The loop() function is structured in four tasks:
 3)  Read the SHT40 Temp / Humid sensors and update the display every 30 sec
 4)  Read and update the barometric pressure every 20 min
 
-### Weather  
-The weather task takes up the most lines of code, but is actually fairly simple.  The task first calls the getForecast function which does these three things:
+### 1)  Weather  
+The weather task takes up the most lines of code and is complex, but can be broken down as follows.  
+The task first calls the getForecast function which does these three things:
 *  Send a properly formatted get string to api.openweathermap.org
 *  Parse the JSON response - the parsing code was created using the ArduinoJSON assistant (ref:  https://youtu.be/NYP_CxdYzLo and arduinojson.org )
 *  Copy the variables to be displayed into the a global struct variable named "weather".
 
-On return from the getForecast function, the task displays the weather data row by row.  The getSymbol function maps the weather id returned from the API call into one of the weather types (SUN, CLOUDS, etc).  The drawWeatherSymbol function then maps this to an associated glyph and displays it to the screen.
+Then, on return from the getForecast function, the task displays the weather data row by row.  The getSymbol function maps the weather id returned from the API call into one of the weather types (SUN, CLOUDS, etc).  The drawWeatherSymbol function then maps this to an associated glyph and displays it to the screen.
 
-### Time  
+### 2)  Time  
+Time is updated using the network time protocal (NTP) servers and requires internet access.  The library time.h is required.  Here is what the code does:
+*  Connects to a WiFi network
+*  Configures the NTP servers using configTime() - example: configTime(0, 0, "pool.ntp.org"); 
+*  Updates the time using time() - example: time_t tnow = time(nullptr);
+*  Sets the time zone using setenv() - example:  setenv("TZ", "PST8PDT,M3.2.0/2,M11.1.0/2", 1);
+*  Converts the time to local time and into a struct variable using localtime() - example:  struct tm *timeinfo = localtime(&tnow);
+*  Draws the time and date to the screen
+
+Here are some great references:
+https://www.tutorialspoint.com/c_standard_library/time_h.htm
+https://github.com/SensorsIot/NTP-time-for-ESP8266-and-ESP32
+
+### 3)  Sensor Temp / Humid  
+
 
