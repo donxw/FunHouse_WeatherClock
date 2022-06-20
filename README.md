@@ -80,6 +80,6 @@ These rules are coded in:
       A strong high pressure system is around 30.4 inches of mercury. Anything above 30 is considered high pressure.  Expect more warm weather.  
       A typical low pressure system is around 29.5 inches of mercury. Anything below 29.9 is considered low pressure.  Expect cooler weather.  
    
-
+These barometer pressure weather predictions don't seem very accurate, but they are fun.  Don't make any life altering plans based on these predictions :)
 
 
