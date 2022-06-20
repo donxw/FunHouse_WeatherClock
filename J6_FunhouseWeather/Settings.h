@@ -1,7 +1,7 @@
 // Max number of days to for weather forecast display
 int MAX_DAYS = 5;
 
-// this is the default for the first weather location on system reboot.  It matches select case 0.
+// this is the default for the first weather location on system reboot.  It matches setLocation switch case 0.
 String currlocation = "Hayward CA";
 String latitude =  "37.67211"; // 90.0000 to -90.0000 negative for Southern hemisphere
 String longitude = "-122.08396"; // 180.000 to -180.000 negative for West
