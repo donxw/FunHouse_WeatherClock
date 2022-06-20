@@ -47,8 +47,8 @@ Time is updated using the network time protocal (NTP) servers and requires inter
 *  Converts the time to local time and into a struct variable using localtime() - example:  struct tm *timeinfo = localtime(&tnow);
 *  Draws the time and date to the screen
 
-Here are some great references:
-https://www.tutorialspoint.com/c_standard_library/time_h.htm
+Here are some great references:  
+https://www.tutorialspoint.com/c_standard_library/time_h.htm  
 https://github.com/SensorsIot/NTP-time-for-ESP8266-and-ESP32
 
 ### 3)  Sensor Temp / Humid  
