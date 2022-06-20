@@ -3,6 +3,8 @@
    TFT Colors:  ST77XX_BLACK, GREEN, WHITE, YELLOW, BLUE, MAGENTA
 
    Barometer reference:  https://www.wikihow.com/Set-a-Barometer#:~:text=Predicting%20weather%20using%20a%20barometer%20is%20all%20about,release%20any%20pressure%20changes%20stored%20in%20the%20mechanisms.
+   time.h reference:   https://www.tutorialspoint.com/c_standard_library/time_h.htm
+   NTP and TZ Usage reference:  https://github.com/SensorsIot/NTP-time-for-ESP8266-and-ESP32
    NTP TZ reference:  https://randomnerdtutorials.com/esp32-ntp-timezones-daylight-saving/
    List of timezones:  https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
    
