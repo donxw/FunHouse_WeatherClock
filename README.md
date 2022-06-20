@@ -65,21 +65,21 @@ To interpret the readings, please see this reference:
 https://www.wikihow.com/Set-a-Barometer#:~:text=Predicting%20weather%20using%20a%20barometer%20is%20all%20about,release%20any%20pressure%20changes%20stored%20in%20the%20mechanisms
 
 These rules are coded in:
-    /*
-      Falling
-      If the reading is over 30.2 inches of mercury and falling rapidly, this indicates cloudy, but warmer weather.
-      If the reading is between 29.8 and 30.2 inches of mercury and falling rapidly, rain is most likely on the way.
+    
+      Falling  
+      If the reading is over 30.2 inches of mercury and falling rapidly, this indicates cloudy, but warmer weather.  
+      If the reading is between 29.8 and 30.2 inches of mercury and falling rapidly, rain is most likely on the way.  
       If it's under 29.8 inches of mercury and falling slowly, rain is likely; if it's falling rapidly, a storm is imminent.
 
-      Rising
-      Readings over 30.2 inches of mercury that rise indicate that the weather will continue to be fair.
-      Readings between 29.8 and 30.2 inches of mercury that rise indicate that the weather will remain whatever it presently is.
+      Rising  
+      Readings over 30.2 inches of mercury that rise indicate that the weather will continue to be fair.  
+      Readings between 29.8 and 30.2 inches of mercury that rise indicate that the weather will remain whatever it presently is.  
       Readings under 29.8 inches of mercury that rise indicate that the weather is clearing, but will be cooler.
 
-      Steady
-      A strong high pressure system is around 30.4 inches of mercury. Anything above 30 is considered high pressure.  Expect more warm weather.
-      A typical low pressure system is around 29.5 inches of mercury. Anything below 29.9 is considered low pressure.  Expect cooler weather.
-    */
+      Steady  
+      A strong high pressure system is around 30.4 inches of mercury. Anything above 30 is considered high pressure.  Expect more warm weather.  
+      A typical low pressure system is around 29.5 inches of mercury. Anything below 29.9 is considered low pressure.  Expect cooler weather.  
+   
 
 
 
